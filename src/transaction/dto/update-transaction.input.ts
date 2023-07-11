@@ -5,6 +5,6 @@ import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
 export class UpdateTransactionInput extends PartialType(
   CreateTransactionInput,
 ) {
-  @Field(() => Int)
-  id: number;
+  @Field(() => String)
+  id: string;
 }

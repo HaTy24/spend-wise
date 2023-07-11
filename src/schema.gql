@@ -3,27 +3,37 @@
 # ------------------------------------------------------
 
 type Transaction {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  id: Int!
+  amount: Float!
+  purpose: String
+  date: DateTime!
 }
 
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Query {
-  transaction(id: Int!): Transaction!
+  transaction: [Transaction!]!
+  transactionById(id: String!): Transaction!
 }
 
 type Mutation {
   createTransaction(createTransactionInput: CreateTransactionInput!): Transaction!
   updateTransaction(updateTransactionInput: UpdateTransactionInput!): Transaction!
-  removeTransaction(id: Int!): Transaction!
+  removeTransaction(id: String!): Transaction!
 }
 
 input CreateTransactionInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  amount: Float!
+  purpose: String!
+  date: DateTime!
 }
 
 input UpdateTransactionInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  amount: Float
+  purpose: String
+  date: DateTime
+  id: String!
 }

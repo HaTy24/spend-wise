@@ -9,7 +9,10 @@ export class TransactionResolver {
   constructor(private readonly transactionService: TransactionService) {}
 
   @Mutation(() => Transaction)
-  createTransaction(@Args('createTransactionInput') createTransactionInput: CreateTransactionInput) {
+  createTransaction(
+    @Args('createTransactionInput')
+    createTransactionInput: CreateTransactionInput,
+  ) {
     return this.transactionService.create(createTransactionInput);
   }
 
@@ -18,18 +21,24 @@ export class TransactionResolver {
     return this.transactionService.findAll();
   }
 
-  @Query(() => Transaction, { name: 'transaction' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  @Query(() => Transaction, { name: 'transactionById' })
+  findOne(@Args('id', { type: () => String }) id: string) {
     return this.transactionService.findOne(id);
   }
 
   @Mutation(() => Transaction)
-  updateTransaction(@Args('updateTransactionInput') updateTransactionInput: UpdateTransactionInput) {
-    return this.transactionService.update(updateTransactionInput.id, updateTransactionInput);
+  updateTransaction(
+    @Args('updateTransactionInput')
+    updateTransactionInput: UpdateTransactionInput,
+  ) {
+    return this.transactionService.update(
+      updateTransactionInput.id,
+      updateTransactionInput,
+    );
   }
 
   @Mutation(() => Transaction)
-  removeTransaction(@Args('id', { type: () => Int }) id: number) {
+  removeTransaction(@Args('id', { type: () => String }) id: string) {
     return this.transactionService.remove(id);
   }
 }
