@@ -1,7 +1,7 @@
 import { InputType, Int, Field, Float } from '@nestjs/graphql';
 
 @InputType()
-export class CreateTransactionInput {
+export class CreateTransactionDTO {
   @Field(() => Float)
   amount: number;
 

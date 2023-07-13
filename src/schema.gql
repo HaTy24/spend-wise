@@ -14,24 +14,35 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type PaginationResponse {
+  result: [Transaction!]!
+  count: Float!
+}
+
 type Query {
-  transaction: [Transaction!]!
+  transaction(dto: PaginationDTO!): PaginationResponse!
   transactionById(id: String!): Transaction!
 }
 
+input PaginationDTO {
+  take: Int!
+  skip: Int!
+  sort: String!
+}
+
 type Mutation {
-  createTransaction(createTransactionInput: CreateTransactionInput!): Transaction!
-  updateTransaction(updateTransactionInput: UpdateTransactionInput!): Transaction!
+  createTransaction(createTransactionInput: CreateTransactionDTO!): Transaction!
+  updateTransaction(updateTransactionInput: UpdateTransactionDTO!): Transaction!
   removeTransaction(id: String!): Transaction!
 }
 
-input CreateTransactionInput {
+input CreateTransactionDTO {
   amount: Float!
   purpose: String!
   date: DateTime!
 }
 
-input UpdateTransactionInput {
+input UpdateTransactionDTO {
   amount: Float
   purpose: String
   date: DateTime

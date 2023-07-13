@@ -20,3 +20,12 @@ export class Transaction {
   @Column()
   date: Date;
 }
+
+@ObjectType()
+export class PaginationResponse {
+  @Field(() => [Transaction])
+  result: [Transaction];
+
+  @Field(() => Number)
+  count: number;
+}

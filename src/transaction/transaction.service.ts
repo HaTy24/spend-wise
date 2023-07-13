@@ -1,29 +1,28 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { CreateTransactionInput } from './dto/create-transaction.input';
-import { UpdateTransactionInput } from './dto/update-transaction.input';
+import { CreateTransactionDTO } from './dto/create-transaction.dto';
+import { UpdateTransactionDTO } from './dto/update-transaction.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Transaction } from './entities/transaction.entity';
 import { Repository } from 'typeorm';
+import { BaseCRUD } from 'src/common/base-crud';
 
 @Injectable()
-export class TransactionService {
+export class TransactionService extends BaseCRUD<Transaction> {
   constructor(
     @InjectRepository(Transaction)
     private transactionRepo: Repository<Transaction>,
-  ) {}
-  create(createTransactionInput: CreateTransactionInput) {
-    return this.transactionRepo.save(createTransactionInput);
+  ) {
+    super(transactionRepo);
   }
-
-  findAll() {
-    return this.transactionRepo.find();
+  create(createTransactionInput: CreateTransactionDTO) {
+    return this.transactionRepo.save(createTransactionInput);
   }
 
   findOne(id: string) {
     return this.transactionRepo.findOneBy({ id });
   }
 
-  async update(id: string, updateTransactionInput: UpdateTransactionInput) {
+  async update(id: string, updateTransactionInput: UpdateTransactionDTO) {
     const transaction = await this.transactionRepo.findOneBy({ id });
     if (!transaction) throw new Error('transaction not found');
     transaction.amount = updateTransactionInput.amount;

@@ -1,8 +1,9 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { PaginationDTO } from 'src/common/dto/common.dto';
+import { CreateTransactionDTO } from './dto/create-transaction.dto';
+import { UpdateTransactionDTO } from './dto/update-transaction.dto';
+import { PaginationResponse, Transaction } from './entities/transaction.entity';
 import { TransactionService } from './transaction.service';
-import { Transaction } from './entities/transaction.entity';
-import { CreateTransactionInput } from './dto/create-transaction.input';
-import { UpdateTransactionInput } from './dto/update-transaction.input';
 
 @Resolver(() => Transaction)
 export class TransactionResolver {
@@ -11,14 +12,17 @@ export class TransactionResolver {
   @Mutation(() => Transaction)
   createTransaction(
     @Args('createTransactionInput')
-    createTransactionInput: CreateTransactionInput,
+    createTransactionInput: CreateTransactionDTO,
   ) {
     return this.transactionService.create(createTransactionInput);
   }
 
-  @Query(() => [Transaction], { name: 'transaction' })
-  findAll() {
-    return this.transactionService.findAll();
+  @Query(() => PaginationResponse, { name: 'transaction' })
+  findAll(
+    @Args('dto')
+    dto: PaginationDTO,
+  ) {
+    return this.transactionService.pagination(dto);
   }
 
   @Query(() => Transaction, { name: 'transactionById' })
@@ -29,7 +33,7 @@ export class TransactionResolver {
   @Mutation(() => Transaction)
   updateTransaction(
     @Args('updateTransactionInput')
-    updateTransactionInput: UpdateTransactionInput,
+    updateTransactionInput: UpdateTransactionDTO,
   ) {
     return this.transactionService.update(
       updateTransactionInput.id,
