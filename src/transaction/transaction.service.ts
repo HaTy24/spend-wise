@@ -27,7 +27,7 @@ export class TransactionService extends BaseCRUD<Transaction> {
     if (!transaction) throw new Error('transaction not found');
     transaction.amount = updateTransactionInput.amount;
     transaction.date = updateTransactionInput.date;
-    transaction.purpose = updateTransactionInput.purpose;
+    transaction.spendingReason = updateTransactionInput.spendingReason;
     return this.transactionRepo.save(transaction);
   }
 

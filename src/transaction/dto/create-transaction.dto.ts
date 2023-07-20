@@ -6,7 +6,7 @@ export class CreateTransactionDTO {
   amount: number;
 
   @Field()
-  purpose?: string;
+  spendingReason?: string;
 
   @Field(() => Date)
   date: Date;

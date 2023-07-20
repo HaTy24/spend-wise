@@ -13,8 +13,8 @@ export class Transaction {
   amount: number;
 
   @Field({ nullable: true })
-  @Column()
-  purpose?: string;
+  @Column({ name: 'spending_reason' })
+  spendingReason: string;
 
   @Field(() => Date, { nullable: false })
   @Column()
