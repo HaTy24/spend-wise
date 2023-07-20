@@ -1,8 +1,12 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Field, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { PaginationDTO } from 'src/common/dto/common.dto';
 import { CreateTransactionDTO } from './dto/create-transaction.dto';
 import { UpdateTransactionDTO } from './dto/update-transaction.dto';
-import { PaginationResponse, Transaction } from './entities/transaction.entity';
+import {
+  PaginationResponse,
+  RemoveTransactionResponse,
+  Transaction,
+} from './entities/transaction.entity';
 import { TransactionService } from './transaction.service';
 
 @Resolver(() => Transaction)
@@ -41,8 +45,9 @@ export class TransactionResolver {
     );
   }
 
-  @Mutation(() => Transaction)
-  removeTransaction(@Args('id', { type: () => String }) id: string) {
-    return this.transactionService.remove(id);
+  @Mutation(() => RemoveTransactionResponse)
+  async removeTransaction(@Args('id', { type: () => String }) id: string) {
+    await this.transactionService.remove(id);
+    return { success: true };
   }
 }

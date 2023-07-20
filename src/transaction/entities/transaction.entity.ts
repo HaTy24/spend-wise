@@ -4,7 +4,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 @ObjectType()
 @Entity()
 export class Transaction {
-  @Field(() => Int)
+  @Field(() => String)
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -28,4 +28,10 @@ export class PaginationResponse {
 
   @Field(() => Number)
   count: number;
+}
+
+@ObjectType()
+export class RemoveTransactionResponse {
+  @Field(() => Boolean)
+  success: boolean;
 }
