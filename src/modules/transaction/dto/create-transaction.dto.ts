@@ -1,4 +1,4 @@
-import { InputType, Int, Field, Float } from '@nestjs/graphql';
+import { InputType, Field, Float } from '@nestjs/graphql';
 
 @InputType()
 export class CreateTransactionDTO {
@@ -8,6 +8,6 @@ export class CreateTransactionDTO {
   @Field()
   spendingReason?: string;
 
-  @Field(() => Date)
-  date: Date;
+  @Field({ nullable: true, defaultValue: new Date() })
+  date?: Date;
 }

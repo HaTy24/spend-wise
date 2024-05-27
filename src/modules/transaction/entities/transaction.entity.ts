@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int, Float } from '@nestjs/graphql';
+import { Field, Float, ObjectType } from '@nestjs/graphql';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @ObjectType()
@@ -19,19 +19,4 @@ export class Transaction {
   @Field(() => Date, { nullable: false })
   @Column()
   date: Date;
-}
-
-@ObjectType()
-export class PaginationResponse {
-  @Field(() => [Transaction])
-  result: [Transaction];
-
-  @Field(() => Number)
-  count: number;
-}
-
-@ObjectType()
-export class RemoveTransactionResponse {
-  @Field(() => Boolean)
-  success: boolean;
 }

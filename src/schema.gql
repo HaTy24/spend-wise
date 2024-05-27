@@ -31,7 +31,7 @@ type Query {
 input PaginationDTO {
   take: Int!
   skip: Int!
-  sort: String!
+  sort: String = "date"
 }
 
 type Mutation {
@@ -43,12 +43,12 @@ type Mutation {
 input CreateTransactionDTO {
   amount: Float!
   spendingReason: String!
-  date: DateTime!
+  date: DateTime = "2024-05-27T09:14:59.611Z"
 }
 
 input UpdateTransactionDTO {
   amount: Float
   spendingReason: String
-  date: DateTime
+  date: DateTime = "2024-05-27T09:14:59.611Z"
   id: String!
 }

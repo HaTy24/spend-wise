@@ -1,5 +1,5 @@
+import { Field, InputType, PartialType } from '@nestjs/graphql';
 import { CreateTransactionDTO } from './create-transaction.dto';
-import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
 
 @InputType()
 export class UpdateTransactionDTO extends PartialType(CreateTransactionDTO) {

@@ -8,6 +8,6 @@ export class PaginationDTO {
   @Field(() => Int)
   skip: number;
 
-  @Field(() => String)
+  @Field({ nullable: true, defaultValue: 'date' })
   sort: string;
 }

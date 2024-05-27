@@ -1,13 +1,13 @@
-import { Args, Field, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { PaginationDTO } from 'src/common/dto/common.dto';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { PaginationDTO } from '../../common/dto/common.dto';
 import { CreateTransactionDTO } from './dto/create-transaction.dto';
 import { UpdateTransactionDTO } from './dto/update-transaction.dto';
+import { Transaction } from './entities/transaction.entity';
+import { TransactionService } from './transaction.service';
 import {
   PaginationResponse,
   RemoveTransactionResponse,
-  Transaction,
-} from './entities/transaction.entity';
-import { TransactionService } from './transaction.service';
+} from './response/transaction.response';
 
 @Resolver(() => Transaction)
 export class TransactionResolver {
