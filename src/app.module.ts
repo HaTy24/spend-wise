@@ -1,10 +1,14 @@
-import { Module } from '@nestjs/common';
-import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { join } from 'path';
-import { TransactionModule } from './modules/transaction/transaction.module';
+import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { GraphQLModule } from '@nestjs/graphql';
+import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
+import { join } from 'path';
+import { ENV_KEY } from './constants';
+import { AuthModule } from './modules/auth/auth.module';
+import { TransactionModule } from './modules/transaction/transaction.module';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
@@ -27,6 +31,21 @@ import { ConfigModule } from '@nestjs/config';
       synchronize: true,
       autoLoadEntities: true,
     }),
+    JwtModule.registerAsync({
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
+        const secret = configService.getOrThrow(ENV_KEY.JWT_SECRET);
+
+        return {
+          secret,
+          signOptions: {
+            expiresIn: configService.get(ENV_KEY.JWT_EXPIRATION, '24h'),
+          },
+        };
+      },
+    }),
+    AuthModule,
+    UserModule,
     TransactionModule,
   ],
   controllers: [],

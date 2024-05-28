@@ -18,7 +18,7 @@ export class TransactionResolver {
     @Args('createTransactionInput')
     createTransactionInput: CreateTransactionDTO,
   ) {
-    return this.transactionService.create(createTransactionInput);
+    return this.transactionService.save(createTransactionInput);
   }
 
   @Query(() => PaginationResponse, { name: 'transaction' })
@@ -26,12 +26,12 @@ export class TransactionResolver {
     @Args('dto')
     dto: PaginationDTO,
   ) {
-    return this.transactionService.pagination(dto);
+    return this.transactionService.paginate(dto);
   }
 
   @Query(() => Transaction, { name: 'transactionById' })
   findOne(@Args('id', { type: () => String }) id: string) {
-    return this.transactionService.findOne(id);
+    return this.transactionService.findOne({ id });
   }
 
   @Mutation(() => Transaction)
@@ -39,7 +39,7 @@ export class TransactionResolver {
     @Args('updateTransactionInput')
     updateTransactionInput: UpdateTransactionDTO,
   ) {
-    return this.transactionService.update(
+    return this.transactionService.updateById(
       updateTransactionInput.id,
       updateTransactionInput,
     );
@@ -47,7 +47,7 @@ export class TransactionResolver {
 
   @Mutation(() => RemoveTransactionResponse)
   async removeTransaction(@Args('id', { type: () => String }) id: string) {
-    await this.transactionService.remove(id);
+    await this.transactionService.deleteById(id);
     return { success: true };
   }
 }

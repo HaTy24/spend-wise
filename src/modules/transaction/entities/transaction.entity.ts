@@ -1,9 +1,10 @@
 import { Field, Float, ObjectType } from '@nestjs/graphql';
+import { Audit } from 'src/common/database/audit';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @ObjectType()
 @Entity()
-export class Transaction {
+export class Transaction extends Audit {
   @Field(() => String)
   @PrimaryGeneratedColumn('uuid')
   id: string;

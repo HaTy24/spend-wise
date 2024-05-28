@@ -2,13 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { BaseCRUD } from '../../common/database/base-crud';
-import { Transaction } from './entities/transaction.entity';
+import { User } from './entities/user.entity';
 
 @Injectable()
-export class TransactionService extends BaseCRUD<Transaction> {
+export class UserService extends BaseCRUD<User> {
   constructor(
-    @InjectRepository(Transaction)
-    private transactionRepo: Repository<Transaction>,
+    @InjectRepository(User)
+    private transactionRepo: Repository<User>,
   ) {
     super(transactionRepo);
   }
