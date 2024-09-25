@@ -1,42 +1,41 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import {
-  DocumentBuilder,
-  SwaggerCustomOptions,
-  SwaggerModule,
-} from '@nestjs/swagger';
+import { NestFactory } from '@nestjs/core'
+import { AppModule } from './app.module'
+import { DocumentBuilder, SwaggerCustomOptions, SwaggerModule } from '@nestjs/swagger'
+import { ValidationPipe } from '@nestjs/common'
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  app.enableCors();
-  app.setGlobalPrefix('/v1/api');
+  const app = await NestFactory.create(AppModule)
+  app.enableCors()
+  app.setGlobalPrefix('/v1/api')
 
   if (process.env.ENABLE_CORS === 'true') {
     app.enableCors({
       origin: '*',
       methods: '*',
       credentials: true,
-    });
+    })
   }
 
+  app.useGlobalPipes(new ValidationPipe({ transform: true }))
+
   // Swagger config.
-  const enableSwagger = process.env.ENABLE_SWAGGER === 'true';
+  const enableSwagger = process.env.ENABLE_SWAGGER === 'true'
   if (enableSwagger) {
     const config = new DocumentBuilder()
       .setTitle('Backend APIs')
       .setDescription('All backend APIs for the product.')
       .setVersion('1.0')
       .addBearerAuth({ type: 'http', in: 'header' })
-      .build();
-    const document = SwaggerModule.createDocument(app, config);
+      .build()
+    const document = SwaggerModule.createDocument(app, config)
     const customOptions: SwaggerCustomOptions = {
       swaggerOptions: {
         persistAuthorization: true,
       },
-    };
-    SwaggerModule.setup('docs', app, document, customOptions);
+    }
+    SwaggerModule.setup('docs', app, document, customOptions)
   }
 
-  await app.listen(process.env.PORT);
+  await app.listen(process.env.PORT)
 }
-bootstrap();
+bootstrap()
