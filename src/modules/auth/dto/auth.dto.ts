@@ -1,5 +1,5 @@
-import { HttpStatus } from '@nestjs/common';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { HttpStatus } from '@nestjs/common'
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 import {
   IsAlphanumeric,
   IsEmail,
@@ -7,39 +7,39 @@ import {
   IsString,
   MaxLength,
   MinLength,
-} from 'class-validator';
-import { ERR_CODE } from 'src/constants';
-import { OperationResult } from 'src/interfaces';
+} from 'class-validator'
+import { ERR_CODE } from 'src/constants'
+import { OperationResult } from 'src/interfaces'
 
 export class RegisterDTO {
   public validate(): OperationResult {
     if (this.email) {
-      const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email);
+      const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email)
       if (!isEmailValid) {
         return {
           success: false,
           message: 'invalid email format',
           code: ERR_CODE.INVALID_EMAIL_FORMAT,
           httpCode: HttpStatus.BAD_REQUEST,
-        };
+        }
       }
     }
 
     if (this.username) {
-      const isUsernameValid = /^[^\d][a-zA-Z0-9_]*$/;
+      const isUsernameValid = /^[^\d][a-zA-Z0-9_]*$/
       if (!isUsernameValid) {
         return {
           success: false,
           message: 'username is invalid',
           code: ERR_CODE.INVALID_USERNAME_FORMAT,
           httpCode: HttpStatus.BAD_REQUEST,
-        };
+        }
       }
     }
 
     return {
       success: true,
-    };
+    }
   }
 
   @ApiProperty({
@@ -48,7 +48,7 @@ export class RegisterDTO {
   @IsOptional()
   @MaxLength(100)
   @IsEmail()
-  email: string;
+  email: string
 
   @ApiProperty({
     example: 'user123',
@@ -56,19 +56,19 @@ export class RegisterDTO {
   @MinLength(5)
   @MaxLength(30)
   @IsAlphanumeric()
-  username: string;
+  username: string
 
   @ApiProperty({
     example: 'Abcd@1234',
   })
   @MinLength(8)
   @MaxLength(60)
-  password: string;
+  password: string
 
   @ApiProperty({
     example: 'C70803DEA0',
   })
-  refCode: string;
+  refCode: string
 }
 
 export class LoginDTO {
@@ -79,12 +79,12 @@ export class LoginDTO {
   @MinLength(5)
   @MaxLength(100)
   @IsString()
-  username: string;
+  username: string
 
   @ApiProperty({
     example: 'Abcd@1234',
   })
   @MinLength(8)
   @MaxLength(60)
-  password: string;
+  password: string
 }

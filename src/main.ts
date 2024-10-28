@@ -1,12 +1,17 @@
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { DocumentBuilder, SwaggerCustomOptions, SwaggerModule } from '@nestjs/swagger'
-import { ValidationPipe } from '@nestjs/common'
+import { ValidationPipe, VersioningType } from '@nestjs/common'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
   app.enableCors()
-  app.setGlobalPrefix('/v1/api')
+  app.enableVersioning({
+    type: VersioningType.URI,
+    defaultVersion: '1',
+    prefix: 'api/v',
+  })
+  // app.setGlobalPrefix('/v1/api')
 
   if (process.env.ENABLE_CORS === 'true') {
     app.enableCors({
