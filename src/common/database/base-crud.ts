@@ -56,10 +56,7 @@ export class BaseCRUD<T extends ObjectLiteral> {
     await this.respository.update(id, data);
   }
 
-  public async bulkUpdate(
-    updateData: QueryDeepPartialEntity<T>,
-    conditions?: Partial<T>,
-  ) {
+  public async bulkUpdate(updateData: QueryDeepPartialEntity<T>, conditions?: Partial<T>) {
     await this.respository
       .createQueryBuilder()
       .update()
@@ -76,10 +73,7 @@ export class BaseCRUD<T extends ObjectLiteral> {
     return this.respository.softDelete(id);
   }
 
-  public async findOne(
-    condition: Record<string, any>,
-    withDeleted = false,
-  ): Promise<T> {
+  public async findOne(condition: Record<string, any>, withDeleted = false): Promise<T> {
     return this.respository.findOne({
       where: condition,
       withDeleted,

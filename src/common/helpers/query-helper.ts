@@ -3,7 +3,7 @@ import { FindOptionsOrder } from 'typeorm';
 export function parseSort(
   data: string,
   convertToSnakeCase = false,
-  tableAlias?: string,
+  tableAlias?: string
 ): FindOptionsOrder<any> {
   if (!data) {
     return {};

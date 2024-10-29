@@ -1,14 +1,14 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
-import { JwtService } from '@nestjs/jwt'
-import { OperationResult } from 'src/interfaces'
-import { User, extractPublicUserInfo } from '../user/entities/user.entity'
-import { UserService } from '../user/user.service'
-import { LoginDTO, RegisterDTO } from './dto/auth.dto'
-import { AuthService } from './auth.service'
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger'
-import { RequestUser } from 'src/common/decorators/request-user'
-import { AuthGuard } from './auth.guard'
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
+import { OperationResult } from 'src/interfaces';
+import { User, extractPublicUserInfo } from '../user/entities/user.entity';
+import { UserService } from '../user/user.service';
+import { LoginDTO, RegisterDTO } from './dto/auth.dto';
+import { AuthService } from './auth.service';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { RequestUser } from 'src/common/decorators/request-user';
+import { AuthGuard } from './auth.guard';
 
 @ApiTags('user/authentication')
 @Controller('auth')
@@ -22,29 +22,29 @@ export class AuthController {
 
   @Post('register')
   public async register(@Body() dto: RegisterDTO): Promise<OperationResult> {
-    const validationResult = dto.validate()
+    const validationResult = dto.validate();
     if (!validationResult.success) {
-      return validationResult
+      return validationResult;
     }
 
-    const registerResult = await this.authService.register(dto)
+    const registerResult = await this.authService.register(dto);
     if (!registerResult.success) {
-      return registerResult
+      return registerResult;
     }
 
     return {
       success: true,
-    }
+    };
   }
 
   @Post('login')
   public async login(@Body() dto: LoginDTO): Promise<OperationResult> {
-    const loginResult = await this.authService.login(dto)
+    const loginResult = await this.authService.login(dto);
     if (!loginResult.success) {
-      return loginResult
+      return loginResult;
     }
 
-    const { data } = loginResult
+    const { data } = loginResult;
 
     return {
       success: true,
@@ -52,7 +52,7 @@ export class AuthController {
         access_token: await this.jwtService.signAsync({ id: data.id }),
         user: extractPublicUserInfo(data),
       },
-    }
+    };
   }
 
   @ApiBearerAuth()
@@ -63,6 +63,6 @@ export class AuthController {
     return {
       success: true,
       data: extractPublicUserInfo(user),
-    }
+    };
   }
 }

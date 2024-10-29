@@ -39,9 +39,7 @@ describe('TransactionService', () => {
     };
     mockRepository.findOneBy.mockResolvedValue(transaction);
 
-    const result = await service.findOne(
-      '7ccfa47f-f482-4ac7-a15d-1115661b2010',
-    );
+    const result = await service.findOne('7ccfa47f-f482-4ac7-a15d-1115661b2010');
 
     expect(result).toEqual(transaction);
   });

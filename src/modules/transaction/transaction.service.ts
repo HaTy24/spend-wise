@@ -8,7 +8,7 @@ import { Transaction } from './entities/transaction.entity';
 export class TransactionService extends BaseCRUD<Transaction> {
   constructor(
     @InjectRepository(Transaction)
-    private transactionRepo: Repository<Transaction>,
+    private transactionRepo: Repository<Transaction>
   ) {
     super(transactionRepo);
   }

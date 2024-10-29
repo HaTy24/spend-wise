@@ -1,10 +1,4 @@
-import {
-  DeepPartial,
-  FindManyOptions,
-  FindOptionsWhere,
-  IsNull,
-  Repository,
-} from 'typeorm';
+import { DeepPartial, FindManyOptions, FindOptionsWhere, IsNull, Repository } from 'typeorm';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 
 import * as queryHelper from '../helpers/query-helper';
@@ -54,10 +48,7 @@ export abstract class OrmCacheService<T> {
     await this.respository.update(id, data);
   }
 
-  public async bulkUpdate(
-    updateData: QueryDeepPartialEntity<T>,
-    conditions?: Partial<T>,
-  ) {
+  public async bulkUpdate(updateData: QueryDeepPartialEntity<T>, conditions?: Partial<T>) {
     await this.respository
       .createQueryBuilder()
       .update()
@@ -74,10 +65,7 @@ export abstract class OrmCacheService<T> {
     return this.respository.softDelete(id);
   }
 
-  public async findOne(
-    condition: Record<string, any>,
-    withDeleted = false,
-  ): Promise<T> {
+  public async findOne(condition: Record<string, any>, withDeleted = false): Promise<T> {
     return this.respository.findOne({
       where: condition,
       withDeleted,

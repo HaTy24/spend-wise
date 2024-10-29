@@ -4,10 +4,7 @@ import { CreateTransactionDTO } from './dto/create-transaction.dto';
 import { UpdateTransactionDTO } from './dto/update-transaction.dto';
 import { Transaction } from './entities/transaction.entity';
 import { TransactionService } from './transaction.service';
-import {
-  PaginationResponse,
-  RemoveTransactionResponse,
-} from './response/transaction.response';
+import { PaginationResponse, RemoveTransactionResponse } from './response/transaction.response';
 
 @Resolver(() => Transaction)
 export class TransactionResolver {
@@ -16,7 +13,7 @@ export class TransactionResolver {
   @Mutation(() => Transaction)
   createTransaction(
     @Args('createTransactionInput')
-    createTransactionInput: CreateTransactionDTO,
+    createTransactionInput: CreateTransactionDTO
   ) {
     return this.transactionService.save(createTransactionInput);
   }
@@ -24,7 +21,7 @@ export class TransactionResolver {
   @Query(() => PaginationResponse, { name: 'transaction' })
   findAll(
     @Args('dto')
-    dto: PaginationDTO,
+    dto: PaginationDTO
   ) {
     return this.transactionService.paginate(dto);
   }
@@ -37,12 +34,9 @@ export class TransactionResolver {
   @Mutation(() => Transaction)
   updateTransaction(
     @Args('updateTransactionInput')
-    updateTransactionInput: UpdateTransactionDTO,
+    updateTransactionInput: UpdateTransactionDTO
   ) {
-    return this.transactionService.updateById(
-      updateTransactionInput.id,
-      updateTransactionInput,
-    );
+    return this.transactionService.updateById(updateTransactionInput.id, updateTransactionInput);
   }
 
   @Mutation(() => RemoveTransactionResponse)
